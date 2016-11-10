@@ -19,17 +19,17 @@ observer.observe();
 
 ### Constructor
 
-#### `LayoutObserver()`
+##### `LayoutObserver()`
 
 The function passed into the `LayoutObserver` constructor will be called each time a change has been detected.
 
 ### Instance Methods
 
-#### `observe()`
+##### `observe()`
 
 Begins observation.
 
-#### `disconnect()`
+##### `disconnect()`
 
 Ends observation.
 
