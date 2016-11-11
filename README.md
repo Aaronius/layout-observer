@@ -1,6 +1,6 @@
 # Layout Observer
 
-Layout Observer watches for a smattering of events and mutations and notifies you when it has detected something that may have affected the layout of a web page (something has moved or changed size).
+Layout Observer watches for a smattering of events and mutations and notifies you when it has detected something that may have affected the layout of a web page (something may have moved or changed size).
 
 ## Installation
 
