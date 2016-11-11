@@ -1,7 +1,7 @@
 {
   "name": "layout-observer",
   "version": "0.1.0",
-  "description": "Watch for any event or mutation that may have changed a web page's layout.",
+  "description": "Watch for events and mutations that may have changed a web page's layout.",
   "main": "lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib",
