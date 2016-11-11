@@ -40,3 +40,7 @@ Modern browsers. The latest Chrome, Firefox, Safari, and Edge, as well as IE 11+
 ## Inspiration
 
 [iframe-resizer](https://github.com/davidjbradshaw/iframe-resizer) was a fantastic resource for much of the event and mutation detection logic.
+
+## License
+
+MIT
