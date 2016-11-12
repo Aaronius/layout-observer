@@ -101,7 +101,9 @@ describe('Layout Observer', () => {
 
   it('notifies observer when an image finishes loading', done => {
     const img = document.createElement('img');
-    img.src = '/base/test/resources/nyan.png';
+    // I would typically use an image that karma hosts, but when I try to do so, in Firefox I get
+    // an "illegal character" message despite trying various images and image types.
+    img.src = 'http://placehold.it/350x150';
     document.body.appendChild(img);
 
     document.body.addEventListener('load', () => {
