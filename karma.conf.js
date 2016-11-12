@@ -1,14 +1,44 @@
 // Karma configuration
 // Generated on Thu Nov 10 2016 20:00:16 GMT-0700 (MST)
+var argv = require('yargs').argv;
 
 module.exports = function(config) {
-  var browsers = ['Firefox'];
+  // Example set of browsers to run on Sauce Labs
+  // Check out https://saucelabs.com/platforms for all browser/platform combos
+  var customLaunchers = {
+    sl_ie11: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 10',
+      version: 'latest'
+    },
+    sl_edge: {
+      base: 'SauceLabs',
+      browserName: 'microsoftedge',
+      platform: 'Windows 10',
+      version: 'latest'
+    },
+    sl_chrome: {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      platform: 'Windows 10',
+      version: 'latest'
+    },
+    sl_firefox: {
+      base: 'SauceLabs',
+      browserName: 'firefox',
+      platform: 'Windows 10',
+      version: 'latest'
+    },
+    sl_mac_safari: {
+      base: 'SauceLabs',
+      browserName: 'safari',
+      platform: 'OS X 10.11',
+      version: 'latest'
+    }
+  };
 
-  if (process.env.TRAVIS) {
-    browsers.push('Chrome_travis_ci');
-  } else {
-    browsers.push('Chrome');
-  }
+  var browsers = argv.sauce ? Object.keys(customLaunchers) : ['Chrome'];
 
   config.set({
 
@@ -75,10 +105,19 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
+    sauceLabs: {
+      testName: 'Layout Observer Karma Test',
+      tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
+      startConnect: false
+    },
+
+    customLaunchers: customLaunchers,
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: browsers,
+
+    reporters: ['dots', 'saucelabs'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

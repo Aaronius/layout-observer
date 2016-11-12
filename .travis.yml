@@ -1,10 +1,12 @@
 language: node_js
 node_js:
-  - "node"
-script: npm test
-before_install:
-  - export CHROME_BIN=chromium-browser
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+- node
+script: npm run test:sauce
 before_script:
-  - npm install
+- npm install
+addons:
+  sauce_connect:
+    username: "Aaronius9er"
+  jwt:
+    # sauce labs access key
+    secure: tZ+H32XXkjAL6XdSkKmOxZM+Kp6Fu/60zvrmGtTVya1odbJ+noJvSdIIeXoCOBXwxsXrx9spwcam2Tibaq/ebcvm7pha+3ryTLnr4QsHrM2Tx6SXbybJ16GZuMgAKiJmfOgR984XC+J8HG/2l464Eo5HJcZGoeyIymNezbwaYWgXL0HYjPRPy+JjipbLM7REKZRqVvh67USx1oQknViACkwMPJ01QVbesvCbGeJaEdNTvr4sy+cLJGlz3H6dnF4bp6bB8bfgUJPmgmuVKN0322fCReyynPwQr7dc1SP2apFOMK296sDnEJ5vE/ECFNFSWrP5NcynJLpx+xsU3pSJy2GOAjwjjt9Fj+z6ILKQyc1pqxrVsHl/Q60ZnOD8yY7w2V9svh3GC2DqCWdTICDrpBlY8ruYUtkj33nVsVxqg3i4ItVdFzReRp5O2gyQO3SQTDUzKIBPN9Y0J3SIAaWjdSrIExw6QZmaYXRditPM8ZrxSrV3VXsG7wWVMLu88hx4lnr7Z44J5ae4sl5KdcprzzrSGMa25W//ZmjVqSCF1lNLF/+JoK2eW0WxiEzR/oU1hSaR10HCyz84xNF4eEJ7pMl2AvLhe2xTkrur+Ykx/dobSCYCsvhF6nAOdUfpCShcYh0KnDSCrizayi4bhl7hJbevs/9bCKmC8gb/GgduAlE=
