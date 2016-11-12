@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/layout-observer.svg)](https://badge.fury.io/js/layout-observer) [![Build Status](https://travis-ci.org/Aaronius/layout-observer.svg?branch=master)](https://travis-ci.org/Aaronius/layout-observer)
+
 # Layout Observer
 
 Layout Observer watches for a smattering of events and mutations and notifies you when it has detected something that may have affected the layout of a web page (something may have moved or changed size).
