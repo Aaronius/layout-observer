@@ -2,6 +2,14 @@
 // Generated on Thu Nov 10 2016 20:00:16 GMT-0700 (MST)
 
 module.exports = function(config) {
+  var browsers = ['Firefox'];
+
+  if (process.env.TRAVIS) {
+    browsers.push('Chrome_travis_ci');
+  } else {
+    browsers.push('Chrome');
+  }
+
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -70,8 +78,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Firefox'],
-
+    browsers: browsers,
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
