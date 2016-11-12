@@ -34,6 +34,12 @@ const EVENT_TYPES = [
   'otransitionend'
 ];
 
+const dispatchEvent = (target, eventType) => {
+  const event = document.createEvent('CustomEvent');
+  event.initEvent(eventType, true, true);
+  target.dispatchEvent(event);
+};
+
 describe('Layout Observer', () => {
   let spy;
   let observer;
@@ -59,7 +65,7 @@ describe('Layout Observer', () => {
 
   it('notifies observer on events', () => {
     EVENT_TYPES.forEach(eventType => {
-      window.dispatchEvent(new Event(eventType));
+      dispatchEvent(window, eventType);
       expect(spy).toHaveBeenCalled();
       spy.calls.reset();
     });
@@ -101,9 +107,7 @@ describe('Layout Observer', () => {
 
   it('notifies observer when an image finishes loading', done => {
     const img = document.createElement('img');
-    // I would typically use an image that karma hosts, but when I try to do so, in Firefox I get
-    // an "illegal character" message despite trying various images and image types.
-    img.src = 'http://placehold.it/350x150';
+    img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
     document.body.appendChild(img);
 
     document.body.addEventListener('load', () => {
@@ -118,7 +122,7 @@ describe('Layout Observer', () => {
     const spy2 = jasmine.createSpy();
     const observer2 = new LayoutObserver(spy2);
 
-    window.dispatchEvent(new Event('mousedown'));
+    dispatchEvent(window, 'mousedown');
 
     expect(spy1).not.toHaveBeenCalled();
     expect(spy2).not.toHaveBeenCalled();
@@ -126,7 +130,7 @@ describe('Layout Observer', () => {
     observer1.observe();
     observer2.observe();
 
-    window.dispatchEvent(new Event('mousedown'));
+    dispatchEvent(window, 'mousedown');
 
     expect(spy1).toHaveBeenCalled();
     expect(spy2).toHaveBeenCalled();
@@ -136,7 +140,7 @@ describe('Layout Observer', () => {
 
     observer2.disconnect();
 
-    window.dispatchEvent(new Event('mousedown'));
+    dispatchEvent(window, 'mousedown');
 
     expect(spy1).toHaveBeenCalled();
     expect(spy2).not.toHaveBeenCalled();
@@ -146,7 +150,7 @@ describe('Layout Observer', () => {
 
     observer1.disconnect();
 
-    window.dispatchEvent(new Event('mousedown'));
+    dispatchEvent(window, 'mousedown');
 
     expect(spy1).not.toHaveBeenCalled();
     expect(spy2).not.toHaveBeenCalled();
