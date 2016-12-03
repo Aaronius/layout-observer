@@ -21,9 +21,13 @@ observer.observe();
 
 ### Constructor
 
-##### `LayoutObserver()`
+##### `LayoutObserver(handler, options)`
 
-The function passed into the `LayoutObserver` constructor will be called each time a change has been detected.
+`handler` The function that should be called each time a change has been detected.
+
+`options` Options object which allows for the following properties:
+
+`options.throttle` If set to a number greater than `0`, LayoutObserver will ensure that `handler` is invoked no more frequently than once every `throttle` milliseconds.
 
 ### Instance Methods
 
