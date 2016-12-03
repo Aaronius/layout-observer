@@ -38,7 +38,7 @@ module.exports = function(config) {
     }
   };
 
-  var browsers = argv.sauce ? Object.keys(customLaunchers) : ['Chrome'];
+  var browsers = argv.sauce ? Object.keys(customLaunchers) : ['Chrome', 'Firefox'];
 
   config.set({
 

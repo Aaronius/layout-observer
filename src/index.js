@@ -34,6 +34,39 @@ const EVENT_TYPES = [
   'otransitionend'
 ];
 
+// Derived from http://stackoverflow.com/a/27078401/459966 which is derived from underscore.
+// This differs from the one in stackoverflow because it's optimized by removing the options object
+// and always assuming the defaults.
+const throttle = (func, wait) => {
+  var context, args, result;
+  var timeout = null;
+  var previous = 0;
+  var later = function() {
+    previous = Date.now();
+    timeout = null;
+    result = func.apply(context, args);
+    if (!timeout) context = args = null;
+  };
+  return function() {
+    var now = Date.now();
+    var remaining = wait - (now - previous);
+    context = this;
+    args = arguments;
+    if (remaining <= 0 || remaining > wait) {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      previous = now;
+      result = func.apply(context, args);
+      if (!timeout) context = args = null;
+    } else if (!timeout) {
+      timeout = setTimeout(later, remaining);
+    }
+    return result;
+  };
+};
+
 const masterObserver = (() => {
   let observing = false;
   const connectedHandlers = [];
@@ -136,8 +169,12 @@ const masterObserver = (() => {
   };
 })();
 
-const LayoutObserver = function(handler) {
-  this.handler = handler;
+const LayoutObserver = function(handler, options) {
+  if (options && options.throttle) {
+    this.handler = throttle(handler, options.throttle);
+  } else {
+    this.handler = handler;
+  }
 };
 
 LayoutObserver.prototype.observe = function() {

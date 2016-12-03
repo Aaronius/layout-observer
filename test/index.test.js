@@ -54,6 +54,11 @@ describe('Layout Observer', () => {
     observer.disconnect();
   });
 
+  // Note that if this test is disabled, then the other tests won't function correctly.
+  // This test waits for DOMContentLoaded which forces all other tests to run after
+  // DOMContentLoaded. If this test is disabled, the spies for the observers in the other
+  // tests won't see any layout changes because they'll run before DOMContentLoaded and the layout
+  // observer doesn't call any handlers until DOMContentLoaded.
   it('notifies observer on DOMContentLoaded', (done) => {
     expect(spy).not.toHaveBeenCalled();
 
@@ -116,6 +121,7 @@ describe('Layout Observer', () => {
     }, true);
   });
 
+
   it('notifies only and all connected observers', () => {
     const spy1 = jasmine.createSpy();
     const observer1 = new LayoutObserver(spy1);
@@ -154,5 +160,42 @@ describe('Layout Observer', () => {
 
     expect(spy1).not.toHaveBeenCalled();
     expect(spy2).not.toHaveBeenCalled();
+  });
+
+  describe('throttling', () => {
+    const THROTTLE_DELAY = 100;
+
+    beforeEach(() => {
+      jasmine.clock().mockDate(new Date());
+      jasmine.clock().install();
+      spy = jasmine.createSpy();
+      observer = new LayoutObserver(spy, { throttle: THROTTLE_DELAY });
+      observer.observe();
+    });
+
+    afterEach(() => {
+      observer.disconnect();
+      jasmine.clock().uninstall();
+    });
+
+    it('should throttle handler calls', () => {
+      for(let i = 0; i < 500; i++) {
+        dispatchEvent(window, 'mousedown');
+      }
+
+      jasmine.clock().tick(THROTTLE_DELAY);
+
+      // Called once at the beginning, and once at the end
+      expect(spy.calls.count()).toBe(2);
+
+      for(let i = 0; i < 500; i++) {
+        dispatchEvent(window, 'mousedown');
+      }
+
+      jasmine.clock().tick(THROTTLE_DELAY);
+
+      // ...and called once more after another delay period.
+      expect(spy.calls.count()).toBe(3);
+    });
   });
 });
