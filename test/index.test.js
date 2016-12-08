@@ -1,6 +1,7 @@
 import LayoutObserver from '../src/index';
 
 const EVENT_TYPES = [
+  'resize',
   'animationstart',
   'webkitAnimationStart',
   'animationiteration',

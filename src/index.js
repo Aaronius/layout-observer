@@ -1,6 +1,7 @@
 // List of events that could potentially change layout without triggering a mutation observer.
 // Inspired by https://github.com/davidjbradshaw/iframe-resizer/blob/86daa57745f630385e3eb6b03af02dac49d8b777/src/iframeResizer.contentWindow.js#L291-L310
 const EVENT_TYPES = [
+  'resize',
   'animationstart',
   'webkitAnimationStart',
   'animationiteration',
